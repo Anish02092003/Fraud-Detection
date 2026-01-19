@@ -7,7 +7,7 @@ The system predicts the probability of fraud for a transaction and returns a ris
 🚀 Live Deployment
 
 Fraud Detection API (Render):
-👉 [https://<your-app-name>.onrender.com](https://fraud-detection-o8gr.onrender.com)
+👉 https://fraud-detection-o8gr.onrender.com
 
 Prediction Endpoint:
 
