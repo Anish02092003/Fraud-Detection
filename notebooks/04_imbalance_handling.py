@@ -8,14 +8,8 @@ from sklearn.metrics import classification_report, roc_auc_score
 from imblearn.over_sampling import SMOTE
 
 
-# -----------------------------
-# 1. Load dataset
-# -----------------------------
 df = pd.read_csv("data/creditcard.csv")
 
-# -----------------------------
-# 2. Features & target
-# -----------------------------
 X = df.drop("Class", axis=1)
 y = df["Class"]
 
@@ -27,9 +21,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-# -----------------------------
-# 3. Feature Scaling
-# -----------------------------
 scaler = StandardScaler()
 
 X_train_scaled = X_train.copy()
@@ -43,9 +34,6 @@ X_test_scaled[["Time", "Amount"]] = scaler.transform(
     X_test[["Time", "Amount"]]
 )
 
-# ======================================================
-# MODEL 1: Logistic Regression with Class Weights
-# ======================================================
 lr_weighted = LogisticRegression(
     max_iter=1000,
     class_weight="balanced",
@@ -62,9 +50,6 @@ print(classification_report(y_test, y_pred_w))
 print("ROC-AUC:", roc_auc_score(y_test, y_prob_w))
 
 
-# ======================================================
-# MODEL 2: SMOTE + Logistic Regression
-# ======================================================
 smote = SMOTE(random_state=42)
 
 X_train_smote, y_train_smote = smote.fit_resample(
@@ -86,3 +71,4 @@ print(classification_report(y_test, y_pred_s))
 print("ROC-AUC:", roc_auc_score(y_test, y_prob_s))
 
 print("\nImbalance handling comparison completed ✅")
+
