@@ -7,14 +7,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score
 
 
-# -----------------------------
-# 1. Load dataset
-# -----------------------------
 df = pd.read_csv("data/creditcard.csv")
 
-# -----------------------------
-# 2. Split features & target
-# -----------------------------
 X = df.drop("Class", axis=1)
 y = df["Class"]
 
@@ -26,9 +20,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-# -----------------------------
-# 3. Feature scaling
-# -----------------------------
 scaler = StandardScaler()
 
 X_train_scaled = X_train.copy()
@@ -42,9 +33,6 @@ X_test_scaled[["Time", "Amount"]] = scaler.transform(
     X_test[["Time", "Amount"]]
 )
 
-# -----------------------------
-# 4. Train model (class-weighted)
-# -----------------------------
 model = LogisticRegression(
     max_iter=1000,
     class_weight="balanced",
@@ -57,9 +45,6 @@ y_prob = model.predict_proba(X_test_scaled)[:, 1]
 
 print("ROC-AUC:", roc_auc_score(y_test, y_prob))
 
-# -----------------------------
-# 5. Threshold tuning
-# -----------------------------
 print("\nThreshold tuning results:\n")
 
 thresholds = np.arange(0.1, 0.9, 0.1)
@@ -79,3 +64,4 @@ for t in thresholds:
     )
 
 print("\nThreshold tuning completed ✅")
+
