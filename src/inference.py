@@ -1,16 +1,12 @@
 import pickle
 import pandas as pd
 
-# -----------------------------
-# Load artifacts
-# -----------------------------
+
 model = pickle.load(open("models/fraud_model.pkl", "rb"))
 scaler = pickle.load(open("models/scaler.pkl", "rb"))
 threshold = pickle.load(open("models/threshold.pkl", "rb"))
 
-# -----------------------------
-# EXACT FEATURE ORDER (CRITICAL)
-# -----------------------------
+
 FEATURE_ORDER = (
     ["Time"]
     + [f"V{i}" for i in range(1, 29)]
@@ -39,3 +35,4 @@ def predict_transaction(transaction_dict):
         "fraud_probability": round(prob, 4),
         "decision": decision
     }
+
