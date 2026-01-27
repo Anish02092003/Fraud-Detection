@@ -6,15 +6,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 
-# -----------------------------
-# Config
-# -----------------------------
 THRESHOLD = 0.3
 
 
-# -----------------------------
-# Load data
-# -----------------------------
+
 df = pd.read_csv("data/creditcard.csv")
 
 X = df.drop("Class", axis=1)
@@ -28,9 +23,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-# -----------------------------
-# Scaling
-# -----------------------------
+
 scaler = StandardScaler()
 
 X_train_scaled = X_train.copy()
@@ -44,9 +37,7 @@ X_test_scaled[["Time", "Amount"]] = scaler.transform(
     X_test[["Time", "Amount"]]
 )
 
-# -----------------------------
-# Train final model
-# -----------------------------
+
 model = LogisticRegression(
     max_iter=1000,
     class_weight="balanced",
@@ -55,9 +46,7 @@ model = LogisticRegression(
 
 model.fit(X_train_scaled, y_train)
 
-# -----------------------------
-# Save artifacts
-# -----------------------------
+
 with open("models/fraud_model.pkl", "wb") as f:
     pickle.dump(model, f)
 
@@ -68,3 +57,4 @@ with open("models/threshold.pkl", "wb") as f:
     pickle.dump(THRESHOLD, f)
 
 print("Model, scaler, and threshold saved successfully ✅")
+
